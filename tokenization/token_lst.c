@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_lst.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoto-gu <acoto-gu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:23:02 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/07 15:51:26 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2024/03/10 18:03:41 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ void	ft_clear_token_lst(t_token_node **lst)
 	while (*lst)
 	{
 		temp = (*lst)->next;
-		free(*lst->content);
-		free(lst);
+		if ((*lst)->content)
+			free((*lst)->content);
+		free(*lst);
 		*lst = temp;
 	}
 }
