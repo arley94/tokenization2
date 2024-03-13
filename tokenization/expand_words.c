@@ -1,8 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand_words.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/13 08:13:15 by acoto-gu          #+#    #+#             */
+/*   Updated: 2024/03/13 19:27:09 by acoto-gu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "token.h"
-#include <string.h>
+#include "../includes/minishell.h"
 
 char	*add_char_and_free(char *old_str, char c)
 {
@@ -59,24 +67,13 @@ char	*add_var_and_free(char *old_str, char *var_name)
 	return (new_str);
 }
 
-char	*get_empty_str(void)
-{
-	char	*str;
-
-	str = malloc(sizeof(char));
-	if (!str)
-		return (NULL);
-	str[0] = '\0';
-	return (str);
-}
-
 char	*expand_env_vars(char *word)
 {
 	char	*new_word;
 	int		start_quote;
 	char	*var_name;
 
-	new_word = get_empty_str();
+	new_word = ft_get_empty_str();
 	start_quote = 0;
 	while (new_word && *word)
 	{
@@ -105,7 +102,7 @@ char	*take_out_quotes(char *str)
 	char	*new_str;
 
 	start_quote = 0;
-	new_str = get_empty_str();
+	new_str = ft_get_empty_str();
 	while (new_str && *str)
 	{
 		if (ft_is_quote(*str) && !start_quote)
@@ -122,7 +119,7 @@ char	*take_out_quotes(char *str)
 	return (new_str);
 }
 
-int main(int argc, char const *argv[], char const *env[])
+/* int main(int argc, char const *argv[], char const *env[])
 {
 	int i = 0;
 	char *str;
@@ -140,4 +137,4 @@ int main(int argc, char const *argv[], char const *env[])
 		i++;
 	}
 	return 0;
-}
+} */

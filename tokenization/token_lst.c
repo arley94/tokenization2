@@ -6,11 +6,11 @@
 /*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:23:02 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/10 18:03:41 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:27:38 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "token.h"
+#include "../includes/minishell.h"
 
 t_token_node	*ft_new_token(char *content, t_token_type type)
 {
@@ -21,6 +21,7 @@ t_token_node	*ft_new_token(char *content, t_token_type type)
 		return (NULL);
 	ptr->content = content;
 	ptr->type = type;
+	ptr->io_type = IO_NONE;
 	ptr->next = NULL;
 	return (ptr);
 }

@@ -6,11 +6,11 @@
 /*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:57:20 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/10 18:07:12 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:28:00 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "token.h"
+#include "../includes/minishell.h"
 
 int	rx_operator(char *line, int *i, t_token_node **tok_list)
 {
@@ -103,11 +103,11 @@ t_token_node	*tokenize(char *line)
 	return (token_list);
 }
 
-int	main(int argc, char const *argv[])
+/* int	main(int argc, char const *argv[])
 {
 	t_token_node	*token_list;
 
 	token_list = tokenize("echo 'hola mundo' > file1 | ls -la");
 	ft_clear_token_lst(&token_list);
 	return (0);
-}
+} */
