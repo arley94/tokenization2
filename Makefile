@@ -13,17 +13,16 @@ LIBFT_PATH 	= $(LIBS_PATH)libft/
 LIBFT_NAME 	= libft.a
 LIBFT		= $(LIBFT_PATH)$(LIBFT_NAME)
 
-#INCLUDES
-INCLUDE = -I ./includes/
+# INCLUDES
+INCLUDE = -I ./include/
 
 # SOURCE FILES
-SRC_PATH	= tokenization/
-SRC_FILES := $(notdir $(wildcard $(SRC_PATH)*.c))
-SRC 		= $(addprefix $(SRC_PATH), $(SRC_FILES))
+SRC_DIRS := $(wildcard src/*/)
+SRC := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)*.c))
 
 # OBJECT FILES
 OBJ_PATH	= obj/
-OBJ_FILES	:= $(SRC_FILES:.c=.o)
+OBJ_FILES	:= $(patsubst src/%.c,%.o,$(SRC))
 OBJ 		:= $(addprefix $(OBJ_PATH), $(OBJ_FILES))
 
 # COMMANDS
@@ -49,13 +48,12 @@ $(LIBFT):
 	@echo "Making libft..."
 	@make -sC $(LIBFT_PATH)
 
-$(OBJ_PATH)%.o: $(SRC_PATH)%.c
+$(OBJ_PATH)%.o: src/%.c
+	@mkdir -p $(dir $@)
 	@$(CC) $(FLAGS) -c -o $@ $< $(INCLUDE)
 
-#$(OBJ): $(OBJ_PATH)
-
 $(OBJ_PATH):
-	@mkdir $(OBJ_PATH)
+	@mkdir -p $(OBJ_PATH)
 
 clean:
 	echo "$(PINK)Removing .o object files.$(CLEAR)"

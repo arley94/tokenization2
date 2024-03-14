@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand_words.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: acoto-gu <acoto-gu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:13:15 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/13 19:27:09 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2024/03/14 15:48:54 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 char	*add_char_and_free(char *old_str, char c)
 {

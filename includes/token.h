@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: acoto-gu <acoto-gu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:02:59 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/13 19:26:38 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2024/03/14 15:47:21 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int				ft_is_redirect_token(t_token_node *token);
 t_io_type		get_token_io_type(t_token_type token_type);
 t_token_node	*ft_new_token(char *content, t_token_type type);
 void			ft_clear_token_lst(t_token_node **lst);
-t_token_node	*ft_get_last_node(t_token_node *lst);
 void			ft_add_token(t_token_node **lst, t_token_node *new);
 int				format_tokens(t_token_node **token_list);
 t_token_node	*tokenize(char *line);

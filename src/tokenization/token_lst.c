@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_lst.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: acoto-gu <acoto-gu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:23:02 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/13 19:27:38 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2024/03/14 15:55:37 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 t_token_node	*ft_new_token(char *content, t_token_type type)
 {
@@ -40,7 +40,7 @@ void	ft_clear_token_lst(t_token_node **lst)
 	}
 }
 
-t_token_node	*ft_get_last_node(t_token_node *lst)
+static t_token_node	*ft_get_last_node(t_token_node *lst)
 {
 	if (!lst)
 		return (NULL);

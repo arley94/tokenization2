@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: acoto-gu <acoto-gu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:57:20 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/13 19:28:00 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2024/03/14 15:49:27 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	rx_operator(char *line, int *i, t_token_node **tok_list)
 {
 	t_token_node	*new_tok;
 
+	new_tok = NULL;
 	if (ft_strncmp(line, "<<", 2) == 0)
 		new_tok = ft_new_token(NULL, T_D_LESS_THAN);
 	else if (ft_strncmp(line, ">>", 2) == 0)

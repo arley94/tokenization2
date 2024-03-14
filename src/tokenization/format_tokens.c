@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   format_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: acoto-gu <acoto-gu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:12:59 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/13 19:27:22 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2024/03/14 15:49:00 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 t_token_node	*join_word_tokens(t_token_node **current_token)
 {
@@ -26,47 +26,42 @@ t_token_node	*join_word_tokens(t_token_node **current_token)
 	new_token->content = ft_strjoin(to_free, (*current_token)->content);
 	free(to_free);
 	if (!new_token->content)
-			return (free(new_token), NULL);
+		return (free(new_token), NULL);
 	*current_token = (*current_token)->next;
 	while (*current_token && (*current_token)->type == T_WORD)
 	{
 		to_free = new_token->content;
-		new_token->content = ft_strjoin_char(new_token->content
-			,(*current_token)->content, ' ');
+		new_token->content = ft_strjoin_char(new_token->content,
+				(*current_token)->content, ' ');
 		free (to_free);
 		if (!new_token->content)
 			return (free(new_token), NULL);
 		*current_token = (*current_token)->next;
 	}
-	return  new_token;
+	return (new_token);
 }
 
 t_token_node	*set_io_types(t_token_node **current_token)
 {
 	t_token_node	*new_token;
 	char			*content;
-	t_token_node	*token_par;
+	t_io_type		redir_type;
 
-	token_par = NULL;
-	new_token = ft_new_token(NULL, (*current_token)->type);
-	if (!new_token)
-		return (NULL);
-	ft_add_token(&token_par, new_token);
+	redir_type = get_token_io_type((*current_token)->type);
 	*current_token = (*current_token)->next;
 	if (!(*current_token))
 		return (NULL);//parse error
 	if ((*current_token)->type != T_WORD)
-		return(NULL);//parse error
+		return (NULL);//parse error
 	content = ft_strdup((*current_token)->content);
 	if (!content)
-		return (ft_clear_token_lst(&token_par), NULL);
+		return (NULL);
 	new_token = ft_new_token(content, (*current_token)->type);
 	if (!new_token)
-		return (free(content), ft_clear_token_lst(&token_par), NULL);
-	new_token->io_type = get_token_io_type(token_par->type);
-	ft_add_token(&token_par, new_token);
+		return (free(content), NULL);
+	new_token->io_type = redir_type;
 	*current_token = (*current_token)->next;
-	return  token_par;
+	return (new_token);
 }
 
 t_token_node	*cpy_token(t_token_node **current_token)
@@ -75,7 +70,7 @@ t_token_node	*cpy_token(t_token_node **current_token)
 
 	new_token = ft_new_token(NULL, (*current_token)->type);
 	if (!new_token)
-		return NULL;
+		return (NULL);
 	*current_token = (*current_token)->next;
 	return (new_token);
 }
@@ -85,7 +80,7 @@ int	format_tokens(t_token_node **token_list)
 	t_token_node	*old_token_list;
 	t_token_node	*new_token_list;
 	t_token_node	*token_to_add;
-	
+
 	new_token_list = NULL;
 	old_token_list = *token_list;
 	while (old_token_list)
