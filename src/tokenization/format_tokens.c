@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   format_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: acoto-gu <acoto-gu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:12:59 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/14 20:05:04 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2024/03/15 11:21:57 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_token_node	*cpy_token(t_token_node **current_token)
 {
 	t_token_node	*new_token;
 
-	new_token = ft_new_token((*current_token)->content, 
+	new_token = ft_new_token((*current_token)->content,
 			(*current_token)->type);
 	if (!new_token)
 		return (NULL);

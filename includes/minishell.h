@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: acoto-gu <acoto-gu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:54:18 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/14 19:25:07 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:01:33 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ typedef struct s_io_node
 typedef struct s_command
 {
 	char		*args;
+	char		**args_splitted;
+	char		*name;
 	t_io_node	*infiles;
 	t_io_node	*outfiles;
 }	t_command;
@@ -39,10 +41,10 @@ typedef struct s_commands_array
 	int			len;
 }	t_commands_array;
 
-t_io_node	*ft_new_io(char *io_arg, t_io_type type);
-void		ft_clear_io_lst(t_io_node **lst);
-void		ft_add_io(t_io_node **lst, t_io_node *new);
-int			parse_commands_array(t_token_node	*token_list,
-				t_commands_array *commands);
-void		free_command(t_command *com);
-void		free_commands_array(t_commands_array *commands);
+t_io_node			*ft_new_io(char *io_arg, t_io_type type);
+void				ft_clear_io_lst(t_io_node **lst);
+void				ft_add_io(t_io_node **lst, t_io_node *new);
+t_commands_array	*parse_commands_array(t_token_node *token_list);
+void				free_command(t_command *com);
+void				free_commands_array(t_commands_array *commands);
+int					split_comds_args(t_commands_array *comds);

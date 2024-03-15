@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: acoto-gu <acoto-gu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:20:08 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/14 19:33:09 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2024/03/15 12:54:39 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ void	free_command(t_command *com)
 {
 	if (com->args)
 		free(com->args);
+	if (com->name)
+		free(com->name);
+	if (com->args_splitted)
+		ft_free_str_array(com->args_splitted);
 	if (com->infiles)
 		ft_clear_io_lst(&com->infiles);
 	if (com->outfiles)
@@ -34,4 +38,5 @@ void	free_commands_array(t_commands_array *commands)
 		i++;
 	}
 	free(commands->comm_array);
+	free(commands);
 }
