@@ -1,30 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 13:06:40 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/15 07:57:35 by acoto-gu         ###   ########.fr       */
+/*   Created: 2024/03/14 19:20:08 by acoto-gu          #+#    #+#             */
+/*   Updated: 2024/03/14 19:33:09 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include <stdio.h>
 
-int	main(void)
+void	free_command(t_command *com)
 {
-	t_token_node		*token_list;
-	t_commands_array	commands;
+	if (com->args)
+		free(com->args);
+	if (com->infiles)
+		ft_clear_io_lst(&com->infiles);
+	if (com->outfiles)
+		ft_clear_io_lst(&com->outfiles);
+	free(com);
+}
 
-	token_list = tokenize("echo 'hola mundo' > file1 | ls -la");
-	int error = format_tokens(&token_list);
+void	free_commands_array(t_commands_array *commands)
+{
+	int	i;
 
-	error = parse_commands_array(token_list, &commands);
-	printf("%d\n", error);
-	free_commands_array(&commands);
-
-	ft_clear_token_lst(&token_list);
-	return (0);
+	i = 0;
+	while (i < commands->len)
+	{
+		free_command(commands->comm_array[i]);
+		i++;
+	}
+	free(commands->comm_array);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoto-gu <acoto-gu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:54:18 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/14 16:37:52 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2024/03/14 19:25:07 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,3 +44,5 @@ void		ft_clear_io_lst(t_io_node **lst);
 void		ft_add_io(t_io_node **lst, t_io_node *new);
 int			parse_commands_array(t_token_node	*token_list,
 				t_commands_array *commands);
+void		free_command(t_command *com);
+void		free_commands_array(t_commands_array *commands);

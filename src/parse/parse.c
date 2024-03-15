@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoto-gu <acoto-gu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 19:00:02 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/14 16:40:14 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2024/03/15 08:05:40 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,22 +80,12 @@ int	add_io(t_token_node *token, t_io_node **io_in, t_io_node **io_out)
 	new_io = ft_new_io(token->content, token->io_type);
 	if (!new_io)
 		return (1);
+	token->content = NULL;
 	if (ft_is_infile(token->io_type))
 		ft_add_io(io_in, new_io);
 	else if (ft_is_outfile(token->io_type))
 		ft_add_io(io_out, new_io);
 	return (0);
-}
-
-void	free_command(t_command *com)
-{
-	if (com->args)
-		free(com->args);
-	if (com->infiles)
-		ft_clear_io_lst(&com->infiles);
-	if (com->outfiles)
-		ft_clear_io_lst(&com->outfiles);
-	free(com);
 }
 
 t_command	*parse_command(t_token_node **curr_tok)
@@ -120,30 +110,29 @@ t_command	*parse_command(t_token_node **curr_tok)
 	return (comm);
 }
 
-int	parse_commands_array(t_token_node	*token_list, t_commands_array *commands)
+int	parse_commands_array(t_token_node	*token_list, t_commands_array *com)
 {
-	t_command	**command_array;
-	int			array_len;
+	t_command	*new_command;
 	int			i;
 
 	i = 0;
-	array_len = get_array_command_len(token_list);
-	command_array = malloc(sizeof(t_command *) * array_len);
-	if (!command_array)
+	com->len = get_array_command_len(token_list);
+	com->comm_array = malloc(sizeof(t_command *) * com->len);
+	if (!com->comm_array)
 		return (1);
-	while (i < array_len && token_list)
+	while (i < com->len && token_list)
 	{
 		if (token_list->type != T_WORD)
-			return (1);
-		command_array[i] = parse_command(&token_list);
+			return (free_commands_array(com), 1);//parse error
+		new_command = parse_command(&token_list);
+		if (!new_command)
+			return (free_commands_array(com), 1);
+		com->comm_array[i] = new_command;
 		i++;
 		if (token_list)
 			token_list = token_list->next;
 	}
-	if (i != array_len)
-		return (1); //parse error
-	commands->comm_array = command_array;
-	commands->len = array_len;
+	if (i != com->len)
+		return (free_commands_array(com), 1); //parse error: more commands were expected
 	return (0);
-
 }
