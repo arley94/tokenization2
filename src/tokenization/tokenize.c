@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoto-gu <acoto-gu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:57:20 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/14 15:49:27 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2024/03/16 13:06:46 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	rx_word(char *line, int *i, t_token_node **tok_list)
 		return (1);
 	new_tok = ft_new_token(word, T_WORD);
 	if (!new_tok)
-		return (1);
+		return (free(word), 1);
 	ft_add_token(tok_list, new_tok);
 	*i = *i + word_len;
 	return (0);

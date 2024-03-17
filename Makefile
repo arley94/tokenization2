@@ -3,7 +3,8 @@ NAME = test
 
 # COMPILER OPTIONS
 CC		= gcc
-FLAGS	= -Wall -Werror -Wextra -g3
+FLAGS	= -Wall -Wextra -Werror
+DEBUG_FLAGS += $(FLAGS) -g3 -D "malloc(x)=ft_xmalloc(x)"
 
 # LIBS
 LIBS_PATH = libs/
@@ -55,11 +56,21 @@ $(OBJ_PATH)%.o: src/%.c
 $(OBJ_PATH):
 	@mkdir -p $(OBJ_PATH)
 
+debug: fclean $(OBJ_PATH)
+	@echo "Making libft..."
+	@make debug -sC $(LIBFT_PATH)
+	@$(foreach file,$(filter src/%.c,$(SRC)), \
+    mkdir -p $(dir $(patsubst src/%.c,obj/%.o,$(file))) && \
+    $(CC) $(DEBUG_FLAGS) -c $(file) -o $(patsubst src/%.c,obj/%.o,$(file));)
+	@$(CC) $(DEBUG_FLAGS) -o $(NAME) $(OBJ) $(INCLUDE) $(LIBFT)
+	@echo "$(GREEN)[OK]\n$(CLEAR)$(GREEN)Success!$(CLEAR)"
+
+
 clean:
-	echo "$(PINK)Removing .o object files.$(CLEAR)"
-	rm -rf $(OBJ_PATH)
-	make clean -sC $(LIBFT_PATH)
-	echo "$(GREEN)Object files removed correctly\n$(CLEAR)"
+	@echo "$(PINK)Removing .o object files.$(CLEAR)"
+	@rm -rf $(OBJ_PATH)
+	@make clean -sC $(LIBFT_PATH)
+	@echo "$(GREEN)Object files removed correctly\n$(CLEAR)"
 
 fclean: clean
 	@make fclean -sC $(LIBFT_PATH)

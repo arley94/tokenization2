@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoto-gu <acoto-gu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 19:00:02 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/15 13:17:57 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2024/03/17 20:37:07 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ t_command	*create_blank_command(void)
 	new_command = malloc(sizeof(t_command));
 	if (!new_command)
 		return (NULL);
-	new_command->args = NULL;
+	new_command->name_and_args = NULL;
+	new_command->name_and_args_splt = NULL;
 	new_command->name = NULL;
-	new_command->args_splitted = NULL;
+	new_command->args = NULL;
 	new_command->infiles = NULL;
 	new_command->outfiles = NULL;
 	return (new_command);
@@ -104,12 +105,31 @@ t_command	*parse_command(t_token_node **curr_tok)
 		if (error)
 			return (free_command(comm), NULL);
 		if ((*curr_tok)->io_type == IO_NONE)
-			error = add_arg(&comm->args, (*curr_tok)->content);
+			error = add_arg(&comm->name_and_args, (*curr_tok)->content);
 		else
 			error = add_io(*curr_tok, &comm->infiles, &comm->outfiles);
 		*curr_tok = (*curr_tok)->next;
 	}
+	if (error)
+		return (free_command(comm), NULL);
 	return (comm);
+}
+
+t_command	**get_empty_command_array(int len)
+{
+	t_command	**com_array;
+	int			i;
+
+	i = 0;
+	com_array = malloc(sizeof(t_command *) * len);
+	if (!com_array)
+		return (NULL);
+	while (i < len)
+	{
+		com_array[i] = NULL;
+		i++;
+	}
+	return (com_array);
 }
 
 t_commands_array	*parse_commands_array(t_token_node	*token_list)
@@ -122,7 +142,7 @@ t_commands_array	*parse_commands_array(t_token_node	*token_list)
 	if (!com)
 		return (NULL);
 	com->len = get_array_command_len(token_list);
-	com->comm_array = malloc(sizeof(t_command *) * com->len);
+	com->comm_array = get_empty_command_array(com->len);
 	if (!com->comm_array)
 		return (free(com), NULL);
 	while (i < com->len && token_list)
@@ -151,15 +171,16 @@ int	split_comds_args(t_commands_array *comds)
 	{
 		if (comds->comm_array[i]->args)
 		{
-			str_arr = ft_split(comds->comm_array[i]->args, ' ');
+			str_arr = ft_split(comds->comm_array[i]->name_and_args, ' ');
 			if (!str_arr)
-				return (free_commands_array(comds), 1);
+				return (1);
+			comds->comm_array[i]->name_and_args_splt = str_arr;
 			if (str_arr[0])
 			{
 				comds->comm_array[i]->name = str_arr[0];
 				str_arr++;
 				if (str_arr[0])
-					comds->comm_array[i]->args_splitted = str_arr;
+					comds->comm_array[i]->args = str_arr;
 			}
 		}
 		i++;

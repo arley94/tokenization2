@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoto-gu <acoto-gu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:54:18 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/15 13:01:33 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2024/03/16 17:44:59 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ typedef struct s_io_node
 
 typedef struct s_command
 {
-	char		*args;
-	char		**args_splitted;
+	char		*name_and_args;
+	char		**args;
+	char		**name_and_args_splt;
 	char		*name;
 	t_io_node	*infiles;
 	t_io_node	*outfiles;

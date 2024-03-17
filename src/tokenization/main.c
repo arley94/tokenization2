@@ -3,31 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoto-gu <acoto-gu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 13:06:40 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/15 13:02:56 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2024/03/16 19:04:19 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include <stdio.h>
 
-int	main(void)
+int g_fail_after = 0;
+int g_num_allocs = 0;
+
+int	main(int argc, char *argv[])
 {
 	t_token_node		*token_list;
 	t_commands_array	*commands;
+	int					error;
+	int					i;
+	int					fail_after_limit;
 
-	token_list = tokenize("echo 'hola mundo' > file1 | ls -la");
-	int error = format_tokens(&token_list);
-
-	commands = parse_commands_array(token_list);
-	error = split_comds_args(commands);
-
-
-	printf("%d\n", error);
-	free_commands_array(commands);
-
-	ft_clear_token_lst(&token_list);
+	if (argc != 2)
+		exit(EXIT_FAILURE);
+	fail_after_limit = atoi(argv[1]);
+	i = 0;
+	while (i++ < fail_after_limit)
+	{
+		g_fail_after = i;
+		g_num_allocs = 0;
+		token_list = tokenize("echo 'hola mundo' > file1 | ls -la");
+		if (!token_list)
+			continue ;
+		error = format_tokens(&token_list);
+		if (error)
+		{
+			ft_clear_token_lst(&token_list);
+			continue ;
+		}
+		commands = parse_commands_array(token_list);
+		ft_clear_token_lst(&token_list);
+		if (!commands)
+			continue ;
+		error = split_comds_args(commands);
+		free_commands_array(commands);
+		if (error == 0)
+			printf("success without failure\n");
+	}
+	printf("final\n");
 	return (0);
 }
