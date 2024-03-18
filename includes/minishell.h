@@ -6,7 +6,7 @@
 /*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:54:18 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/16 17:44:59 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2024/03/18 08:34:04 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,3 +49,4 @@ t_commands_array	*parse_commands_array(t_token_node *token_list);
 void				free_command(t_command *com);
 void				free_commands_array(t_commands_array *commands);
 int					split_comds_args(t_commands_array *comds);
+t_commands_array	*get_commands(char *line);
