@@ -6,7 +6,7 @@
 /*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 19:00:02 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/17 20:37:07 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2024/03/18 21:18:49 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ int	split_comds_args(t_commands_array *comds)
 	i = 0;
 	while (i < comds->len)
 	{
-		if (comds->comm_array[i]->args)
+		if (comds->comm_array[i]->name_and_args)
 		{
 			str_arr = ft_split(comds->comm_array[i]->name_and_args, ' ');
 			if (!str_arr)
