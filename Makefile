@@ -1,10 +1,13 @@
 # NAMES
 NAME = test
 
+#RULE TO COMPILE WITH XMALLOC
+FAIL_MALLOC = xmalloc
+
 # COMPILER OPTIONS
 CC		= gcc
-FLAGS	= -Wall -Wextra -Werror
-DEBUG_FLAGS += $(FLAGS) -g3 -D "malloc(x)=ft_xmalloc(x)"
+FLAGS	= -Wall -Wextra -Werror -g3
+DEBUG_FLAGS += $(FLAGS) -D "malloc(x)=ft_xmalloc(x)"
 
 # LIBS
 LIBS_PATH = libs/
@@ -56,9 +59,9 @@ $(OBJ_PATH)%.o: src/%.c
 $(OBJ_PATH):
 	@mkdir -p $(OBJ_PATH)
 
-debug: fclean $(OBJ_PATH)
+$(FAIL_MALLOC): fclean $(OBJ_PATH)
 	@echo "Making libft..."
-	@make debug -sC $(LIBFT_PATH)
+	@make $(FAIL_MALLOC) -sC $(LIBFT_PATH)
 	@$(foreach file,$(filter src/%.c,$(SRC)), \
     mkdir -p $(dir $(patsubst src/%.c,obj/%.o,$(file))) && \
     $(CC) $(DEBUG_FLAGS) -c $(file) -o $(patsubst src/%.c,obj/%.o,$(file));)
