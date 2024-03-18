@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_words.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acoto-gu <acoto-gu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:13:15 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/14 15:48:54 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2024/03/18 07:27:14 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,30 @@ char	*take_out_quotes(char *str)
 		str++;
 	}
 	return (new_str);
+}
+
+int	get_expanded_tokens(t_token_node *token_list)
+{
+	char	*temp1;
+	char	*temp2;
+
+	while (token_list)
+	{
+		if (token_list->type == T_WORD)
+		{
+			temp1 = expand_env_vars(token_list->content);
+			if (!temp1)
+				return (1);
+			temp2 = take_out_quotes(temp1);
+			if (!temp2)
+				return (free(temp1), 1);
+			free(temp1);
+			free (token_list->content);
+			token_list->content = temp2;
+		}
+		token_list = token_list->next;
+	}
+	return (0);
 }
 
 /* int main(int argc, char const *argv[], char const *env[])

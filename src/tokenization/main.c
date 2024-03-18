@@ -6,7 +6,7 @@
 /*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 13:06:40 by acoto-gu          #+#    #+#             */
-/*   Updated: 2024/03/16 19:04:19 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2024/03/18 08:06:29 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,16 @@ int	main(int argc, char *argv[])
 	{
 		g_fail_after = i;
 		g_num_allocs = 0;
-		token_list = tokenize("echo 'hola mundo' > file1 | ls -la");
+		token_list = tokenize("echo $var'hola mundo' > file1 | ls -la");
 		if (!token_list)
 			continue ;
 		error = format_tokens(&token_list);
+		if (error)
+		{
+			ft_clear_token_lst(&token_list);
+			continue ;
+		}
+		error = get_expanded_tokens(token_list);
 		if (error)
 		{
 			ft_clear_token_lst(&token_list);
